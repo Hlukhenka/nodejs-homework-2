@@ -1,19 +1,13 @@
 /** @format */
 
-// const fs = require("fs/promises");
-// const path = require("path");
-// const { nanoid } = require("nanoid");
-
 const { Contact } = require("../models/contact");
 
 const { HttpError, ctrlWrapper } = require("../helpers");
 
-// const contactsPath = path.join(__dirname, "./contacts.json");
-
 const listContacts = async (req, res) => {
-  const data = await Contact.find();
+  const { _id: owner } = req.user;
+  const data = await Contact.find({ owner });
 
-  console.log(data);
   res.json(data);
 };
 
@@ -44,8 +38,10 @@ const removeContact = async (req, res) => {
 };
 
 const addContact = async (req, res) => {
-  const result = await Contact.create(req.body);
+  const { _id: owner } = req.user;
+  console.log(req.user);
 
+  const result = await Contact.create({ ...req.body, owner });
   res.status(201).json(result);
 };
 
