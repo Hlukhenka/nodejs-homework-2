@@ -13,7 +13,7 @@ const authenticate = async (req, res, next) => {
   if (bearer !== "Bearer") {
     next(HttpError(401));
   }
-    
+
   try {
     const { id } = jwt.verify(token, SEKRET_KEY);
     const user = await User.findById(id);
@@ -29,5 +29,7 @@ const authenticate = async (req, res, next) => {
     next(HttpError(401));
   }
 };
+
+
 
 module.exports = authenticate;
