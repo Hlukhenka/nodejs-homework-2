@@ -21,15 +21,26 @@ const userSchema = new Schema({
     default: "starter",
     required: true,
   },
-  // avatarURL: {
-  //   type: String,
-  //   required: true,
-  // },
+  avatarURL: {
+    type: String,
+    required: true,
+  },
+  verify: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
+  verificationCode: {
+    type: String,
+    default: "",
+    required: true,
+  },
 });
 
 userSchema.post("save", HandleMongooseError);
 
 const User = model("user", userSchema);
+const emailSchema = Joi.object({ email: Joi.string().required() });
 
 const registerSchema = Joi.object({
   password: Joi.string().required(),
@@ -44,6 +55,7 @@ const loginSchema = Joi.object({
 const schemas = {
   registerSchema,
   loginSchema,
+  emailSchema,
 };
 
 module.exports = { schemas, User };

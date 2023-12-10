@@ -15,6 +15,13 @@ router.post("/login", validateBody(schemas.loginSchema), ctrl.login);
 
 router.get("/current", authenticate, ctrl.getCurrent);
 
+router.get("/verify/:verificationCode", ctrl.verifyEmail);
+
+router.post(
+  "/verify",
+  validateBody(schemas.emailSchema, ctrl.resentVerifyEmail)
+);
+
 router.post("/logout", authenticate, ctrl.logout);
 
 router.patch(

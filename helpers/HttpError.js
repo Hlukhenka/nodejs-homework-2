@@ -10,8 +10,8 @@ const errorMessageList = {
 const HttpError = (status, message = errorMessageList[status]) => {
   const err = new Error(message);
   err.status = status;
+
   return err;
-  
 };
 
 module.exports = HttpError;
