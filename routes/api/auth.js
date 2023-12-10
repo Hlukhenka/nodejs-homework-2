@@ -6,7 +6,12 @@ const router = express.Router();
 
 const ctrl = require("../../controllers/auth");
 
-const { validateBody, authenticate, upload } = require("../../middlewares");
+const {
+  validateBody,
+  authenticate,
+  upload,
+  validateImageUpload,
+} = require("../../middlewares");
 const { schemas } = require("../../models/user");
 
 router.post("/register", validateBody(schemas.registerSchema), ctrl.register);
@@ -21,6 +26,7 @@ router.patch(
   "/avatars",
   authenticate,
   upload.single("avatar"),
+  validateImageUpload,
   ctrl.updateAvatar
 );
 
